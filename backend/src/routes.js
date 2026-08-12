@@ -1,18 +1,12 @@
-// Record movement
-    await pool.query(
-      `INSERT INTO movements (item_id, from_location, to_location, note)
-       VALUES ($1, $2, $3, $4)`,
-      [item.id, item.location, to_location, note || null]
+id, item.location, to_location, note || null]
     );
 
-    // Update item location
     const updated = await pool.query(
       `UPDATE items SET location = $1, updated_at = CURRENT_TIMESTAMP
        WHERE id = $2 RETURNING *`,
       [to_location, item.id]
     );
 
-    // Emit real-time update (optional)
     const io = req.app.get('io');
     if (io) {
       io.emit('item_moved', { itemId: item.id, newLocation: to_location });
