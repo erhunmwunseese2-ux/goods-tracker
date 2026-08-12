@@ -46,11 +46,6 @@ async function initDB() {
         note TEXT,
         moved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
-
-      -- Create default admin user (password: admin123)
-      INSERT INTO users (username, password)
-      VALUES ('admin', '$2a$10$8K1p/a0dL1LXMIgoEDFrwOfMQsF8xqF5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y')
-      ON CONFLICT (username) DO NOTHING;
     `);
 
     console.log('✅ Database tables ready');
